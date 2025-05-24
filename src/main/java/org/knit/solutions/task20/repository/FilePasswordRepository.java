@@ -6,6 +6,7 @@ import org.knit.solutions.task20.model.PasswordEntry;
 import org.knit.solutions.task20.security.MasterPasswordHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Primary
 @Repository
 public class FilePasswordRepository implements PasswordRepository {
     private static final Logger logger = LoggerFactory.getLogger(FilePasswordRepository.class);
@@ -29,7 +31,7 @@ public class FilePasswordRepository implements PasswordRepository {
         this.objectMapper = new ObjectMapper();
         this.encryptionService = encryptionService;
         this.masterPasswordHolder = masterPasswordHolder;
-        loadFromFile();
+        //loadFromFile();
     }
 
     @Override
@@ -72,7 +74,7 @@ public class FilePasswordRepository implements PasswordRepository {
         }
     }
 
-    private void loadFromFile() {
+    public void loadFromFile() {
         File file = new File(STORAGE_FILE);
         if (!file.exists()) {
             logger.info("Файл с паролями не найден, создаем новое хранилище");
